@@ -1,0 +1,36 @@
+Traditional vs Distributed  VCS
+
+1. working with commits
+git log - show all previous commits
+git log --online 
+git show <commit id>
+
+2. working with branches
+git branch -a 
+git branch -c <new branch>
+git checkout <branch name>
+git merge <brach>
+git push <origin> <local>
+
+3. check git status, differences 
+git fetch 
+git status
+git diff  - difference with previous commit in current branch 
+git diff <branch1> <branch2>
+
+4. Rollback
+git checkout  <filename>   - rollback the files before stage (already tracked)
+git restore <filename> -  rollback file after staged (before committed)
+git revert HEAD - restore the last commit (after committed, also add a new commit , keep the commit history)
+git revert <commit id>
+git reset <commit id> - restore to the provided commit while removing after commit history that is after the given commit id
+
+
+1.23.2
+<major>, <minor> , <patch>
+
+Git tag - another name for a commit
+git tag -a <tag_name> -m "<commit message>"
+
+
+
