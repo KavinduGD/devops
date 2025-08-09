@@ -80,3 +80,20 @@ When you run a script from the terminal:
 ## Read User Input
 
 > `read`
+
+## {$variable} vs $Variable
+
+- echo "**$BASH_VERSIONtext"** # tries to find variable named BASH_VERSIONtext → empty
+- echo "**${BASH_VERSION}text"** # correctly prints 5.2.21text
+
+## (( ... )) → Arithmetic command
+
+## echo $(cat hosts) and echo `cat hosts`
+
+- same ` ` is just old syntax
+
+## if
+
+## for
+
+## while
