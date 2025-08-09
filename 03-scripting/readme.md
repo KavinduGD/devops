@@ -48,3 +48,35 @@
 5. If the command is external (like `ls`, `grep`), the `/bin/bash` process starts a new child process to run that command.
 6. When the command finishes, the child process exits and its memory is freed.
 7. The interactive `/bin/bash` process waits for your next command.
+
+---
+
+# Parent process and children process
+
+When you run a script from the terminal:
+
+> Parent process → your interactive shell (e.g., /bin/bash) in the terminal
+
+> Child process → a new shell (also /bin/bash) started by the kernel to run your script
+
+> Grandchildren → external commands run by the script
+
+---
+
+## Command line arguments
+
+> $0 - name of the script  
+> $1 , $2, ...
+
+## System variables
+
+- $@ - all arguments
+- $# - number of arguments
+- $? - Exits status of last command
+- ..... many more
+
+## " " vs ' '
+
+## Read User Input
+
+> `read`
