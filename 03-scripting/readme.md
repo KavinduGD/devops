@@ -88,12 +88,14 @@ When you run a script from the terminal:
 
 ## (( ... )) → Arithmetic command
 
-## echo $(cat hosts) and echo `cat hosts`
+## HOSTS=$(cat hosts) vs echo HOSTS=\`cat hosts\`
 
-- same ` ` is just old syntax
+- same \`...\` is just old syntax
 
 ## if
 
 ## for
 
 ## while
+
+## Functions
