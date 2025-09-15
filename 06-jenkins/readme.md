@@ -53,11 +53,15 @@ Jenkins provides two primary models for defining and managing builds:
   java -jar jenkins-cli.jar -s http://13.201.95.47:8080 -auth kavindu_gihan:11338a47ede2dc3bcd4b9bd402e48ea1e9 list-jobs
   ```
 
-### Source Control Polling in Jenkins
+---
+
+## Triggers in Jenkins
+
+### 1.Source Control Polling in Jenkins
 
 - **Jenkins checks your source code repository at regular intervals to see if there are any changes (new commits, new branches, etc.). If it detects changes, it triggers a build automatically.**
 
-### Webhooks in Jenkins
+### 2.Webhooks in Jenkins
 
 - **way for external services (like GitHub, GitLab, or Bitbucket) to notify Jenkins automatically when something happens.**
   > Example: You push code to GitHub → GitHub sends a webhook (HTTP POST request) to Jenkins → Jenkins starts a build.
@@ -68,6 +72,46 @@ Jenkins provides two primary models for defining and managing builds:
 
 - Polling: Jenkins repeatedly asks the repo, “Any changes?”
 - Webhooks: The repo notifies Jenkins immediately when changes happen. (More efficient, no unnecessary checks.)
+
+### 3.Scheduled Builds in Jenkins
+
+- **Jenkins can be configured to run builds at specific times or intervals.**
+- **This is useful for regular tasks like nightly builds or weekly reports.**
+
+### 4.Remote Triggering in Jenkins
+
+- **You can start a Jenkins build remotely using a URL or an API call.**
+- **This is useful for integrating Jenkins with other tools or scripts.**
+
+  ```curl -X POST "http://<jenkins-server>:8080/job/<job-name>/build" \
+      --user "<username>:<api-token>" \
+      -H "Jenkins-Crumb:abcd1234efgh"
+  ```
+
+### 5.Build after other projects(Job) are built
+
+- **You can set up a Jenkins job to start building after another job completes.**
+
+---
+
+## Master / Slave Architecture
+
+### Why use Slave (Agent)?
+
+- **Distribute Workload**
+- **Different Environments** - Some jobs may require specific OS or software.
+- **Isolation**
+
+> 🛑 By default, linux machine do not provide user,password authentication from ssh (so when adding node take this to consideration)
+
+---
+
+## Security in Jenkins
+
+- **Jenkins has a built-in user database for managing users and their permissions.**
+- **You can create users, assign roles, and set permissions to control who can do what**
+
+---
 
 ### mvn `<plugin-prefix>:<goal>`
 
@@ -88,3 +132,7 @@ Jenkins provides two primary models for defining and managing builds:
 - **sonarqube use web hooks to notify jenkins about the quality gate status**
 
   > `http://<jenkins-url>/sonarqube-webhook/ `
+
+---
+
+<img src="image.png" width="800" />
