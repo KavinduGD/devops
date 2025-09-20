@@ -54,4 +54,4 @@ pipeline {
 
 ---
 
-<img src="image.png" width="800" />
+<img src="../image.png" width="800" />
