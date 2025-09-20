@@ -113,6 +113,12 @@ Jenkins provides two primary models for defining and managing builds:
 
 ---
 
+## Workspace in Jenkins
+
+- **where the files for a specific job are stored during its execution.**
+- **All builds gets of one job share the same workspace unless configured otherwise.**
+- **We can clean the workspace before or after the build.**
+
 ### mvn `<plugin-prefix>:<goal>`
 
 `mvn checkstyle:checkstyle`
@@ -120,19 +126,13 @@ Jenkins provides two primary models for defining and managing builds:
 - **plugin-prefix**: Short name for a Maven plugin (e.g., `checkstyle`).
 - **goal**: Specific task provided by the plugin (e.g., `checkstyle`).
 
-### SonarQube Integration with Jenkins
-
-- **We use sonar scanner to scan the code and send the report to sonarqube server**
-- **Also we can use sonarqube plugin in jenkins to do the same task**
-- **After scanning we can see the report in sonarqube server**
-
-#### Sonarqube Quality Gates
-
-- **Quality Gates are a set of conditions that your code must meet to be considered acceptable.**
-- **sonarqube use web hooks to notify jenkins about the quality gate status**
-
-  > `http://<jenkins-url>/sonarqube-webhook/ `
-
 ---
 
-<img src="image.png" width="800" />
+## Basic plugins in Jenkins
+
+- **Git plugin**: Integrates Git with Jenkins.
+- **Pipeline plugin**: Enables Jenkins Pipeline as code.
+- **Docker plugin**: Allows jenkins to provision agents as docker containers.
+- **Docker pipeline plugin**: Run build steps inside Docker within your pipeline.
+- **Blue Ocean plugin**: Modern UI for Jenkins Pipelines.
+- **Stage View plugin**: Visualize pipeline stages.
