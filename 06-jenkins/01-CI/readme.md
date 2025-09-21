@@ -39,6 +39,19 @@ pipeline {
 
 ```
 
+## Syncing Jenkins server workspace with Docker container workspace
+
+```groovy
+        docker {
+            image 'node:alpine'
+            reuseNode true
+        }
+```
+
+this just use bind mound behind the scene
+
+> $ docker run -t -d -u 111:113 -w /var/lib/jenkins/workspace/first-docker **_-v /var/lib/jenkins/workspace/first-docker:/var/lib/jenkins/workspace/first-docker:rw,z_** -v /var/lib/jenkins/workspace/first-docker@tmp:/var/lib/jenkins/workspace/first-docker@tmp:rw,z -e
+
 ## SonarQube Integration with Jenkins
 
 - **We use sonar scanner to scan the code and send the report to sonarqube server**
@@ -55,3 +68,4 @@ pipeline {
 ---
 
 <img src="../image.png" width="800" />
+```

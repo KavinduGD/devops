@@ -131,6 +131,7 @@ Jenkins provides two primary models for defining and managing builds:
 ## Basic plugins in Jenkins
 
 - **Git plugin**: Integrates Git with Jenkins.
+- **GitHub plugin**: Integrates GitHub with Jenkins.
 - **Pipeline plugin**: Enables Jenkins Pipeline as code.
 - **Docker plugin**: Allows jenkins to provision agents as docker containers.
 - **Docker pipeline plugin**: Run build steps inside Docker within your pipeline.
