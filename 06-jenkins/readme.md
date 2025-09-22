@@ -118,6 +118,9 @@ Jenkins provides two primary models for defining and managing builds:
 - **where the files for a specific job are stored during its execution.**
 - **All builds gets of one job share the same workspace unless configured otherwise.**
 - **We can clean the workspace before or after the build.**
+- **😀 Each node gets its own workspace, each node clones workspace from the git first. There are not shared workspaces between nodes.**
+
+## <img src="./workspace.png" width=700>
 
 ### mvn `<plugin-prefix>:<goal>`
 
