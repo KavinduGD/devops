@@ -43,3 +43,30 @@
       when: item.required == True
       loop: "{{ packages }}"
 ```
+
+# Loops in Ansible
+
+- **Loops**: Used to iterate over a list of items and perform tasks for each item.
+- **loop** and **with_items** are used to create loops in Ansible tasks.
+- **item** is a special variable that represents the current item in the loop.
+
+```yaml
+---
+- name: Create multiple users
+  hosts: all
+  vars:
+    users:
+      - name: user1
+        uid: 1001
+      - name: user2
+        uid: 1002
+      - name: user3
+        uid: 1003
+  tasks:
+    - name: Create users
+      user:
+        name: "{{ item.name }}"
+        uid: "{{ item.uid }}"
+        state: present
+      loop: "{{ users }}"
+```

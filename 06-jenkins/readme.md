@@ -140,3 +140,4 @@ Jenkins provides two primary models for defining and managing builds:
 - **Docker pipeline plugin**: Run build steps inside Docker within your pipeline.
 - **Blue Ocean plugin**: Modern UI for Jenkins Pipelines.
 - **Stage View plugin**: Visualize pipeline stages.
+- **Publish Over SSH plugin**: Transfer files via SSH.

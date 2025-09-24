@@ -158,6 +158,24 @@ database:
 8. Group vars
 9. Role defaults
 
+### Jinja2 templating rules
+
+- `{{ variable }}` - used to print the value of a variable
+
+```yaml
+msg: "The application is {{ app_name }}"
+```
+
+- need "" is the variable at the beginning
+
+```yaml
+msg: "{{ app_name }} is running"
+```
+
+```yaml
+msg: App name  is {{app_name}}
+```
+
 ### Magic variables
 
 - `hostvars` - dictionary containing all variables associated with the other hosts in the inventory
