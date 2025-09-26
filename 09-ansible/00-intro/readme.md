@@ -211,6 +211,28 @@ msg: App name  is {{app_name}}
 - reusable, standalone scripts that can be used by Ansible to perform specific tasks
   - examples: `file`, `copy`, `yum`, `apt`, `service`, `command`, `shell`, etc.
 
+### Handlers
+
+- special tasks that are triggered by other tasks when they report a change
+
+  - typically used to restart services or perform actions that should only occur if a change has been made
+
+- Executed at the end of a play, even if multiple tasks notify the same handler, it will only run once
+
+````yaml
+tasks:
+  - name: Install Nginx
+    copy:
+      src: /local/path/to/nginx.conf
+      dest: /etc/nginx/nginx.conf
+    notify: Restart Nginx
+
+handlers:
+  - name: Restart Nginx
+    service:
+      name: nginx
+      state: restarted
+
 ## varifying a playbook
 
 ### check mode
@@ -219,7 +241,7 @@ msg: App name  is {{app_name}}
 
 ```bash
 ansible-playbook playbook.yml --check
-```
+````
 
 ### diff mode
 
@@ -268,14 +290,55 @@ play - sequence of tasks to be applied, in order, to one or more hosts selected 
 playbook - text file containing a list of one or more plays to run in a specific order
 role - way of automatically loading certain vars_files, tasks, and handlers based on a known file structure
 
+### 🛑 Ansible uses jinja2 templating - which is a python-based templating engine
+
+- **{{ variable }}** - used to print the value of a variable
+
+- **{% if condition %}** ... {% endif %} - used for conditional statements
+
+```yaml
+{%- if ansible_facts['os_family'] == "RedHat" -%}
+  msg: "This is a RedHat-based system"
+{%- elif ansible_facts['os_family'] == "Debian" -%}
+  msg: "This is a Debian-based system"
+{%- else -%}
+  msg: "This is some other OS family"
+{%- endif -%}
 ```
 
+- **{% for item in list %}... {% endfor %}** - used for loops
+
+````yaml
+{%- for user in users -%}
+  - name: Create user {{ user.name }}
+    user:
+      name: "{{ user.name }}"
+      state: present
+{%- endfor -%}
+
+#### Jinja2 filters
+
+- used to modify variables in templates
+  - `{{ variable | filter_name }}`
+  - examples: `lower`, `upper`, `default`, `replace`, `join`, `split`, `length`, etc.
+
+```yaml
+msg: "The application name in lowercase is {{ app_name | lower }}"
+````
+
+#### Jinja2 List and Set
+
+- Lists are ordered collections of items, while sets are unordered collections of unique items.
+
+```yaml
+my_list: [apple, banana, orange]
+my_set: { apple, banana, orange }
 ```
 
-```
+- list and set with filters
 
-```
-
-```
-
+```yaml
+my_list: [apple, banana, orange]
+unique_list: "{{ my_list | unique }}"
+sorted_list: "{{ my_list | sort }}"
 ```
