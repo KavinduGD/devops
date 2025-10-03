@@ -22,4 +22,44 @@
 - Each job runs on a brand new VM that gets destroyed afterward.
 - This ensures isolation: jobs don’t interfere with each other.
 
-### In github actions, all jobs run in parallel by default.
+### 🛑 In github actions, all jobs run in parallel by default.
+
+## Secrets and environment variables
+
+- **Secrets**: Securely store sensitive information (e.g., API keys, passwords).
+- **Environment Variables**: Store non-sensitive configuration data.
+
+## Conditionals
+
+- Use `if` to run steps or jobs based on conditions.
+- Common conditions: `success()`, `failure()`, `always()`, `cancelled()`.
+
+  - `success()`: True if all previous steps/jobs succeeded.
+  - `failure()`: True if any previous step/job failed.
+  - `always()`: Always true, regardless of previous outcomes.
+  - `cancelled()`: True if the workflow was cancelled.
+
+## Permissions
+
+- **Default Permissions**: Read/write access to the repository.
+- **Custom Permissions**: Fine-tune access for specific jobs or steps.
+- Use the `permissions` key in the workflow file to set custom permissions.
+
+- Example:
+
+  ```yaml
+  permissions:
+    contents: read
+  ```
+
+## Variables
+
+1. ${{ }} → GitHub Actions Expression Syntax
+
+- Evaluated by the workflow engine (YAML parser) before the job/step runs.
+- Used to reference contexts (like github.sha, secrets, steps._.outputs, vars._, env.\*).
+
+2. $VAR → Shell Variable
+
+- Used inside your script/command (the run: block).
+- Standard Bash/Unix variable syntax.

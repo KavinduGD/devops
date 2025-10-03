@@ -18,6 +18,7 @@
 ## Inventory
 
 - list of nodes or hosts that are managed by Ansible
+- can be Hosts, Network devices, Cloud instances, Containers, etc.
 
 ### inventory parameters
 
@@ -219,7 +220,7 @@ msg: App name  is {{app_name}}
 
 - Executed at the end of a play, even if multiple tasks notify the same handler, it will only run once
 
-````yaml
+```yaml
 tasks:
   - name: Install Nginx
     copy:
@@ -232,6 +233,7 @@ handlers:
     service:
       name: nginx
       state: restarted
+```
 
 ## varifying a playbook
 
@@ -241,7 +243,7 @@ handlers:
 
 ```bash
 ansible-playbook playbook.yml --check
-````
+```
 
 ### diff mode
 

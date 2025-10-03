@@ -1,0 +1,111 @@
+name: Build Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Maven build
+        run: mvn install
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: vprofile-artifact
+          path: target/*.war
+
+      - name: Notify build success
+        if: failure()
+        run: echo "Build failed!"
+
+  Test:
+    runs-on: ubuntu-latest
+    needs: Build
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run testst on main branch
+        if: github.ref == 'ref/heads/main'
+        run: mvn test
+
+      - name: Checkstyle
+        run: mvn checkstyle:checkstyle
+
+  Security_Scan:
+    runs-on: ubuntu-latest
+    needs: Build
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Trivy file system scan
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          scan-type: "fs"
+          scan-ref: "."
+          format: json
+          exit-code: 0
+          vuln-type: os,library
+          output: trivy-results.json
+
+      - name: Upload Trivy scan result
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-results
+          path: trivy-results.json
+
+  Build_and_Publish:
+    runs-on: ubuntu-latest
+    environment: dev
+    needs:
+      - Build
+      - Test
+      - Security_Scan
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v5.0.0
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECERET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+        id: login-ecr
+
+      - name: Build, tag, and push image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          IMAGE_REPO=$ECR_REGISTRY/actionlearning
+          docker build -t $IMAGE_REPO:$IMAGE_TAG .
+          docker push $IMAGE_REPO:$IMAGE_TAG
