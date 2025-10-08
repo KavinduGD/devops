@@ -3,6 +3,20 @@
 - **Modules**: Predefined scripts that perform specific tasks in Ansible.
   - Examples: `file`, `copy`, `yum`, `apt`, `service`
 
+## Basic Modules
+
+- **ping** - check connectivity to remote hosts(not same as ICMP ping)
+- **setup** - gather facts about remote hosts. Called automatically at the start of a playbook run unless disabled.
+- **file** - manage file and directory properties (e.g., create, delete, set permissions)
+- **copy** - copy files from the control machine to remote hosts
+- **command** - run a command on remote hosts (does not use a shell)
+- **fetch** - fetch files from remote hosts to the control machine
+- **set_fact** - set custom facts for use later in the playbook
+- **pause** - pause playbook execution for a specified amount of time or until user input
+- **wait_for** - wait for a condition before proceeding (e.g., wait for a port to be open)
+
+---
+
 ## Idempotency in Modules
 
 - Modules are designed to be idempotent, meaning running the same module multiple times will not change the system.

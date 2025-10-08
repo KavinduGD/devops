@@ -3,6 +3,7 @@
 - **Simple** - human-readable automation
 - **Many usecases** - provisioning, configuration management, application deployment, orchestration, network automation
 - **Agentless** - no need to install agents (ansible) on target machines
+- **Idempotent**
   - Uses SSH for communication for linux/unix
   - Uses WinRM for communication for Windows
 
@@ -159,6 +160,16 @@ database:
 8. Group vars
 9. Role defaults
 
+---
+
+### facts vs Set_facts
+
+- facts - Facts are variables automatically discovered by Ansible when it runs the setup module on a host.
+
+- Set_facts - set_fact is a manual way to define or modify facts (variables) during playbook execution.
+
+---
+
 ### Jinja2 templating rules
 
 - `{{ variable }}` - used to print the value of a variable
@@ -214,7 +225,7 @@ msg: App name  is {{app_name}}
 
 ### Handlers
 
-- special tasks that are triggered by other tasks when they report a change
+- special tasks that are triggered by other tasks when they report a **change**
 
   - typically used to restart services or perform actions that should only occur if a change has been made
 
@@ -234,6 +245,18 @@ handlers:
       name: nginx
       state: restarted
 ```
+
+---
+
+---
+
+## Ansible logs colors
+
+- green - Success (no changes made)
+- yellow - Success (changes made)
+- red - Failed
+
+---
 
 ## varifying a playbook
 
