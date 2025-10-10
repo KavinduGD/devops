@@ -242,6 +242,35 @@ this just use bind mound behind the scene
 
 ---
 
+## Passing Data between stages in Jenkins
+
+- **We can use environment variables or files to share data between stages.**
+
+```groovy
+pipeline {
+    agent any
+    environment {
+        MY_VAR = ''
+    }
+    stages {
+        stage('Set Variable') {
+            steps {
+                script {
+                    MY_VAR = 'Hello, World!'
+                }
+            }
+        }
+        stage('Use Variable') {
+            steps {
+                echo "MY_VAR is: ${MY_VAR}"
+            }
+        }
+    }
+}
+```
+
+---
+
 ## Basic plugins in Jenkins
 
 - **Git plugin**: Integrates Git with Jenkins.
