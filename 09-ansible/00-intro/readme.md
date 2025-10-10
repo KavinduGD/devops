@@ -162,14 +162,6 @@ database:
 
 ---
 
-### facts vs Set_facts
-
-- facts - Facts are variables automatically discovered by Ansible when it runs the setup module on a host.
-
-- Set_facts - set_fact is a manual way to define or modify facts (variables) during playbook execution.
-
----
-
 ### Jinja2 templating rules
 
 - `{{ variable }}` - used to print the value of a variable
@@ -198,8 +190,18 @@ msg: App name  is {{app_name}}
 
 - gathered information about the remote system
   - include details like OS type, IP address, memory, CPU, etc.
-- can be accessed using the `ansible_facts` variable
+- can be accessed using the `ansible_facts` variable. But we can also access them directly without using `ansible_facts` prefix.
+  - e.g., `ansible_facts['os_family']` or simply `os_family`
 - can be gathered using the `setup` module (by default, facts are gathered at the beginning of a playbook run)
+- we can create custom facts using the `set_fact` module and adding them to the /etc/ansible/facts.d/ directory
+
+---
+
+### facts vs Set_facts
+
+- facts - Facts are variables automatically discovered by Ansible when it runs the setup module on a host.
+
+- Set_facts - set_fact is a manual way to define or modify facts (variables) during playbook execution.
 
 ---
 
@@ -333,13 +335,14 @@ role - way of automatically loading certain vars_files, tasks, and handlers base
 
 - **{% for item in list %}... {% endfor %}** - used for loops
 
-````yaml
+```yaml
 {%- for user in users -%}
   - name: Create user {{ user.name }}
     user:
       name: "{{ user.name }}"
       state: present
 {%- endfor -%}
+```
 
 #### Jinja2 filters
 
@@ -349,7 +352,7 @@ role - way of automatically loading certain vars_files, tasks, and handlers base
 
 ```yaml
 msg: "The application name in lowercase is {{ app_name | lower }}"
-````
+```
 
 #### Jinja2 List and Set
 
@@ -366,4 +369,17 @@ my_set: { apple, banana, orange }
 my_list: [apple, banana, orange]
 unique_list: "{{ my_list | unique }}"
 sorted_list: "{{ my_list | sort }}"
+```
+
+- Jinja2 extensions
+  - additional features that can be enabled in Jinja2 templates
+  - examples: `loop controls`, `do`, `with`, etc.
+
+```yaml
+{% for entry in range(10, 0, -1) -%}
+  {% if entry is odd -%}
+    {% continue %}
+  {% endif -%}
+  {{ entry }}
+{% endfor %}
 ```
