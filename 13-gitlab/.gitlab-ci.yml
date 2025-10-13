@@ -1,0 +1,52 @@
+stages: # List of stages for jobs, and their order of execution
+  - build
+  - test
+  - security
+
+variables:
+  PROJECT_NAME: "vprofile"
+  JAVA_OPTS: ${JAVA_OPTIONS}
+
+build-job:
+  stage: build
+  image: maven:3.9.9-eclipse-temurin-17
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "main"'
+    - when: never
+  script:
+    - echo "Building the ${PROJECT_NAME}..."
+    - echo "Using Java options ${JAVA_OPTS}"
+    - echo "my secret is ${MY_SECRET}"
+    - echo "The triggering branch is ${CI_COMMIT_REF_NAME}"
+    - mvn install
+  artifacts:
+    paths:
+      - target/vprofile-v2.war
+
+test-job: # This job runs in the build stage, which runs first.
+  stage: test
+  image: maven:3.9.9-eclipse-temurin-17
+  needs: ["build-job"]
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "main"'
+    - when: never
+  script:
+    - echo "Running tests for ${PROJECT_NAME}..."
+    - mvn install
+    - mvn checkstyle:checkstyle
+
+security-scan:
+  stage: security
+  image:
+    name: aquasec/trivy:latest
+    entrypoint:
+      - ""
+  needs: ["build-job"]
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "main"'
+    - when: never
+  script:
+    - trivy fs --format json  --exit-code 0 --vuln-type os,library --output trivy-report.json .
+  artifacts:
+    paths:
+      - trivy-report.json
