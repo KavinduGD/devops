@@ -250,6 +250,31 @@ handlers:
 
 ---
 
+## Ansible Vault
+
+- tool for encrypting sensitive data within Ansible projects
+- can encrypt entire files or specific variables within playbooks
+- uses AES256 encryption algorithm
+
+### Creating a new vault file
+
+```bash
+ansible-vault create secret.yml
+```
+
+```bash
+ansible-playbook playbook.yml --ask-vault-pass
+```
+
+---
+
+## Excuting Multi playbooks
+
+```bash
+- import_playbook: playbook1.yaml
+- import_playbook: playbook2.yaml
+```
+
 ---
 
 ## Ansible logs colors
