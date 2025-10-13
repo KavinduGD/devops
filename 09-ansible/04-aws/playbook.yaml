@@ -1,0 +1,22 @@
+---
+- name: AWS test
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: s3 list
+      amazon.aws.s3_bucket_info:
+      register: result
+
+    - name: show result
+      debug:
+        var: result
+
+    - name: create bucket
+      amazon.aws.s3_bucket:
+        name: my-test-bucket-tkg12
+        state: present
+      register: bucket_result
+
+    - name: show bucket creation result
+      debug:
+        var: bucket_result
