@@ -93,3 +93,13 @@
       paths:
         - path/to/artifact
   ```
+
+## Git lab ecosystem
+
+- **GitLab CI/CD**: Integrated CI/CD pipelines
+- **GitLab Container Registry**: Built-in Docker registry
+- **GitLab Package Registry**: Support for various package managers
+- **GitLab Pages**: Static site hosting
+- **GitLab Issues**: Issue tracking and project management
+- **GitLab Wiki**: Documentation and knowledge base
+- **GitLab Snippets**: Shareable code snippets
