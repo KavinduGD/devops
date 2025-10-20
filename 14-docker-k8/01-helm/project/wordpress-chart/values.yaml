@@ -1,0 +1,32 @@
+wordpress:
+  image: wordpress:latest
+  replicas: 2
+  service:
+    port: 80
+    type: ClusterIP
+  storage:
+    size: 5Gi
+    storageClass: default
+
+mysql:
+  image: mysql:8.0
+  replicas: 1
+  service:
+    port: 3306
+    type: ClusterIP
+  storage:
+    size: 10Gi
+    storageClass: default
+
+secrets:
+  mysqlRootPassword: cm9vdHBhc3N3b3Jk
+  mysqlDatabase: d29yZHByZXNz
+  mysqlUser: d3B1c2Vy
+  mysqlPassword: d3BwYXNzd29yZA==
+
+ingress:
+  enabled: true
+  className: nginx
+  host: wp.experts247.online
+  path: /
+  pathType: Prefix
