@@ -29,6 +29,22 @@
 - **Secrets**: Securely store sensitive information (e.g., API keys, passwords).
 - **Environment Variables**: Store non-sensitive configuration data.
 
+### $GITHUB_ENV file
+
+- When a GitHub Actions job runs, the runner (the virtual machine that executes your steps) automatically creates a temporary file — the path of that file is stored in an environment variable called $GITHUB_ENV.
+
+```yaml
+steps:
+  - name: Set variable
+    run: echo "GREETING=Hello" >> $GITHUB_ENV
+
+  - name: Use variable
+    run: echo "$GREETING world!"
+```
+#### 🧱 Why use $GITHUB_ENV instead of export?
+
+- Because each step in a GitHub Action runs in a new shell, so export variables vanish after one step. $GITHUB_ENV is GitHub’s official way to share variables between steps.
+
 ## Conditionals
 
 - Use `if` to run steps or jobs based on conditions.
