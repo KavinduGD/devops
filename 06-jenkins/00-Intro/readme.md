@@ -8,28 +8,13 @@
 ## Freestyle vs Pipeline as a code
 
 - **Freestyle Jobs**:
-
   - Traditional way
   - Configuration is done through the UI
   - Suitable for simple tasks.
 
 - **Pipeline as Code**:
-
   - Repeatable
   - Complex workflows and version control.
-
-### How 3rd party software be use
-
-- **we can install them in the os and give their path**
-- **we can tell jenkins the version and jenkins will download and use them when the job runs**
-- **we can tel jenkins the url to download the software and jenkins download when the job runs**
-
-### Jenkins Pipeline vs. Jobs
-
-Jenkins provides two primary models for defining and managing builds:
-
-1. Jobs (also known as "Freestyle Jobs")
-2. Pipelines
 
 ## Types of Jenkins Pipelines
 
@@ -120,7 +105,7 @@ Jenkins provides two primary models for defining and managing builds:
 - **We can clean the workspace before or after the build.**
 - **😀 Each node gets its own workspace, each node clones workspace from the git first. There are not shared workspaces between nodes.**
 
-## <img src="./workspace.png" width=700>
+## <img src="./images/workspace.png" width=700>
 
 ### mvn `<plugin-prefix>:<goal>`
 
@@ -281,9 +266,28 @@ pipeline {
 - **Blue Ocean plugin**: Modern UI for Jenkins Pipelines.
 - **Stage View plugin**: Visualize pipeline stages.
 - **Publish Over SSH plugin**: Transfer files via SSH.
+- **SonarQube Scanner for Jenkins**: add sonarqube server
 - **Matrix Authorization Strategy plugin**: Fine-grained access control.
 - **SSH Build Agents plugin**: Use SSH to connect to remote build agents.
 
-```
+---
 
+### How 3rd party software be use
+
+- **we can install them in the os and give their path**
+- **we can tell jenkins the version and jenkins will download and use them when the job runs**
+- **we can tel jenkins the url to download the software and jenkins download when the job runs**
+
+🔥 Modern Best Practice (Important)
+
+Most modern Jenkins pipelines avoid all 3 methods by using:
+
+- 🐳 Docker
+
+```groovy
+agent {
+    docker {
+         image 'node:20-alpine'
+    }
+}
 ```
